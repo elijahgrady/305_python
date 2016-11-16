@@ -1,18 +1,30 @@
-class CSP:
-    def __init__(self, a, b, c, d, x, y, rgb = (255,255,255)):
-        self.a = a
-        self.b = b
-        self.c = c
-        self.d = d
-        colors =  self.colors = {}
-        colors[x,y]=rgb
+class MS:
+    def __init__(self, str):
+        self.str = str
+
+    def __add__(self, other):
+        return MS(self.str + other.str)
+
+    def __str__(self):
+        return self.str
+
+    def __iter__(self):
+        yield self.str
 
 
-    def __call__(self, x, y):
-        return self.colors[(x,y)]
+cindy = MS('Cindy ')
+print(cindy)
 
-a = CSP(20, 50, 30, 60, x = 43, y = 44, rgb = (255,255,255))
-b = CSP(10, 20, 30, 40, x = 15, y = 35, rgb = (255,0,0))
+a = "Jeff"
+for x in a:
+    print(x, end = "")
 
-print(a(43,44))
-print(b(15,35))
+print(" ")
+
+
+ec = MS('enjoys cooking')
+cindy = cindy + ec
+print(cindy)
+
+for x in cindy:
+    print(x, end="")
