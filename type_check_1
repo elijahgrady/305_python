@@ -1,0 +1,54 @@
+from functools import wraps
+
+def type_check(**decls):
+    def decorator(f):
+        code = f.__code__
+        fname = f.__name__
+        names = code.co_varnames[:code.co_argcount]
+        @wraps(f)
+        def decorated(*args,**kwargs):
+            for argname, argtype in decls.items():
+                try:
+                    argval = args[names.index(argname)]
+                except ValueError:
+                    argval = kwargs.get(argname)
+                if argval is None:
+                    #end case for None 
+                    raise TypeError("%s(...): arg '%s' is null"
+                                    % (fname, argname))
+                if not isinstance(argval, argtype):
+                    #check for type compatibility 
+                    raise TypeError("%s(...): arg '%s': type is %s, must be %s"
+                                    % (fname, argname, type(argval), argtype))
+            return f(*args,**kwargs)
+        return decorated
+    return decorator
+
+#test
+@type_check(a = int, b = int)
+def someFunction(a, b):
+    #code
+    pass
+
+@type_check(a = str, b = int)
+def someOtherFunction(a = str, b = int):
+    #code 
+    pass
+
+@type_check(a = str, b = bool)
+def someOtherOtherFunction(a = str, b = bool):
+    #code
+    pass
+
+#does not raise TypeError
+someFunction(1, 2)
+someOtherFunction('hi', 9)
+someOtherOtherFunction('hello', True) 
+
+#raises TypeError
+'''
+someFunction(1.1, 1.2)
+someFunction(1, 2)
+someOtherOtherFunction(True, 'hello')
+'''
+
