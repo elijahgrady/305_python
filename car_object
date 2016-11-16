@@ -1,0 +1,41 @@
+from datetime import date
+
+class Car:
+    def __init__(self, make, year, color = None, electric = False):
+        self.make = make
+        self.year = year
+        self.color = color
+        self.electric = electric
+
+    def age(self):
+        current_year = date.today().year
+        return (current_year - self.year)
+
+#test
+a = Car('Ford', 2009)
+b = Car('VW', 1999, 'Pink and Purple')
+c = Car('Ferrari', 2016, 'Red', True)
+print(a)
+print(b)
+print(c)
+print(a.age)
+print(b.age)
+print(c.age)
+print(a.make)
+print(b.make)
+print(c.make)
+print(a.year)
+print(b.year)
+print(c.year)
+print(a.color)
+print(b.color)
+print(c.color)
+print(a.electric)
+print(b.electric)
+print(c.electric)
+aage = a.age()
+bage = b.age()
+cage = c.age()
+print(aage)
+print(bage)
+print(cage)
