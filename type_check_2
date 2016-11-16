@@ -1,0 +1,29 @@
+from functools import wraps
+
+def type_check(*accepted_arg_types):
+    def accept_decorator(validate_function):
+        @wraps(validate_function)
+        def decorator_wrapper(*function_args, **function_args_dict):
+            if len(accepted_arg_types) is not len(accepted_arg_types):
+                print("errors unhandled: type check failed")
+            for arg_num, (actual_arg, accepted_arg_type) in enumerate(zip(function_args, accepted_arg_types)):
+                if not type(actual_arg) is accepted_arg_type:
+                    print("errors unhandled: type check failed")
+            return validate_function
+        return decorator_wrapper
+    return accept_decorator
+
+#test
+@type_check(int, int, int, int, int, int, int)
+def testFunction(a, b, c, d, e, f, g):
+    return None
+
+testFunction({'hi', 2, 3, 4, 5, 6, 7})
+testFunction({1, 2, 3 ,4, 5, 6, 7.7})
+testFunction('hi', 2, 3, 4, 5, 6, 7)
+testFunction(1, 2, 3 ,4, 5, 6, 7.7)
+testFunction(1, 2, 3, 4, 5, 6, 7)
+print("no errors: type check passed")
+testFunction(1, 2, 3 ,4, 5, 6, 0)
+print("no errors: type check passed")
+
