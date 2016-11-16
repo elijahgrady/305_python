@@ -1,0 +1,109 @@
+def new(obj, *args, **kw):
+    return obj(*args, **kw)
+
+
+class Iterator:
+    def __init__(self, x):
+        self.elements = tuple(x.rep)
+        self.position = 0
+
+    def __next__(self):
+        if self.position < len(self.elements):
+            element = self.elements[self.position]
+            self.position += 1
+            return element
+        else:
+            raise StopIteration
+
+
+class Set:
+    def __iter__(self):
+        return Iterator(self)
+
+    # helper
+    def __len__(self):
+        total = 0
+        for i in self:
+            total += 1
+        return total
+
+    # |
+    def __or__(self, other):  # union
+        obj = new(type(self))
+        for i in self:
+            if i not in obj:
+                obj.add(i)
+
+        for i in other:
+            if i not in obj:
+                obj.add(i)
+        return obj
+
+
+class DictSet(Set):
+    def __init__(self, elements=()):
+        rep = self.rep = {}
+
+        for element in elements:
+            rep[element] = element
+
+    def add(self, x):
+        self.rep[x] = x
+
+
+class ListSet(Set):
+    def __init__(self, elements=()):
+        rep = self.rep = []
+
+        for element in elements:
+            if element not in rep:
+                rep.append(element)
+
+    def add(self, x):
+        self.rep.append(x)
+
+
+print("\n")
+print("dictionary test case results:")
+print("\n")
+
+testDictionary1 = DictSet([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+testDictionary2 = DictSet([7, 8, 9])
+testDictionary3 = DictSet([-1, -2, -3])
+testDictionary4 = DictSet([-1, 0, 1])
+testDictionary5 = DictSet([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+testDictionary6 = DictSet([])
+
+testDictionaryUnion1 = testDictionary1 | testDictionary2
+testDictionaryUnion2 = testDictionary2 | testDictionary3
+testDictionaryUnion3 = testDictionary3 | testDictionary4
+testDictionaryUnion4 = testDictionary4 | testDictionary5
+
+print("dictionaryUnion1: ", testDictionaryUnion1.rep)
+print("dictionaryUnion2: ", testDictionaryUnion2.rep)
+print("dictionaryUnion3: ", testDictionaryUnion3.rep)
+print("dictionaryUnion4: ", testDictionaryUnion4.rep)
+print("\n")
+
+print("list test case results:")
+print("\n")
+
+testList1 = ListSet([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+testList2 = ListSet([7, 8, 9])
+testList3 = ListSet([-1, -2, -3])
+testList4 = ListSet([-1, 0, 1])
+testList5 = ListSet([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+testList6 = ListSet([])
+
+testListUnion1 = testList1 | testList2
+testListUnion2 = testList2 | testList3
+testListUnion3 = testList3 | testList4
+testListUnion4 = testList4 | testList5
+
+print("listUnion1: ", testListUnion1.rep)
+print("listUnion2: ", testListUnion2.rep)
+print("listUnion3: ", testListUnion3.rep)
+print("listUnion4: ", testListUnion4.rep)
+print("\n")
+
+
