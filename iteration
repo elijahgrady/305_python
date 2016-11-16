@@ -1,0 +1,55 @@
+class List:
+    def __init__(self, elements=()):
+        self.elements = list(elements)
+
+    def __iter__(self):
+        return Iterator(self)
+
+
+class Iterator:
+    def __init__(self, fself):
+        self.elements = fself.elements
+        self.length = len(self.elements)
+        self.position = 0
+        try:
+            sorted(self.elements)
+        except:
+            pass #unhandled 
+        
+    def __next__(self):
+        if (self.position < self.length):
+            self.position += 1
+            return (self.elements[self.position-1])
+        else:
+            raise StopIteration 
+            
+
+#test        
+a = List((3, 2, 1))
+b = List((9, 8, 7, 6))
+c = List((False, True, 1, 2, 'Red', 'Blue'))
+
+print("warning: non numeric typed lists left unsorted")
+print("SIMPLE TESTING")
+print(a)
+print(b)
+print(c)
+
+for x in a:
+    print(x)
+
+for y in b:
+    print(y)
+
+for z in c:
+    print(z)
+
+
+print("NESTING TESTING")
+for x in a:
+    for y in b:
+        for z in c:
+            print(x)
+            print(y)
+            print(z)
+    
