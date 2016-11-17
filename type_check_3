@@ -1,0 +1,23 @@
+  1 def type_check():
+  2     def wrap(f):
+  3         def wrapped(*args):
+  4             typed = type(args[0])
+  5             for x in args:
+  6                 if type(x) is not typed:
+  7                     raise TypeError
+  8             f(*args)
+  9         return wrapped
+ 10     return wrap
+ 11
+ 12 @type_check()
+ 13 def testFunction(*args):
+ 14     for x in args:
+ 15         print (x)
+ 16
+ 17 #test
+ 18 #first three tests pass
+ 19 testFunction("test two strings", "test two strings")
+ 20 testFunction(1,2)
+ 21 testFunction(True, False)
+ 22 #final test fails and raises TypeError
+ 23 testFunction("Turtles", 69)
