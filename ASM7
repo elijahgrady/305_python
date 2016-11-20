@@ -1,3 +1,7 @@
+from polynomial import Polynomial
+from student import Student # write your own Student class
+import time
+
 class proxy:
     atime = time.asctime(time.localtime(time.time())) #access time
     ctime = time.asctime(time.localtime(time.time())) #creation time
@@ -8,15 +12,13 @@ class proxy:
         self.ctime = time.asctime(time.localtime(time.time()))
 
     def __getattr__(self, name):
-        self.atime = time.asctime(time.localtime(time.time()))
+        atime = time.asctime(time.localtime(time.time()))
         return getattr(self._obj, name)
 
     def __setattr__(self, name, value):
         if name not in ['_obj', 'ctime', 'cost_base']:
+            mtime = time.asctime(time.localtime(time.time()))
             setattr(self._obj, name, value)
-            self.mtime = time.asctime(time.localtime(time.time()))
         else:
+            mtime = time.asctime(time.localtime(time.time()))
             object.__setattr__(self, name, value)
-            self.mtime = time.asctime(time.localtime(time.time()))
-            
- I'm getting some weird errors in my proxy class, can someone help me fix it :) ? 
