@@ -1,3 +1,4 @@
+#has some bugs ... still fixing ... srry! if you manage to fix it please let me know! 
 from polynomial import Polynomial
 from student import Student # write your own Student class
 import time
@@ -9,7 +10,9 @@ class proxy:
 
     def __init__(self, obj):
         self._obj = obj
-        self.ctime = time.asctime(time.localtime(time.time()))
+        self.atime = time.asctime(time.localtime(time.time()))
+        self.ctime = time.asctime(time.localtime(time.time())) #creation time
+        self.mtime = time.asctime(time.localtime(time.time())) #modification time
 
     def __getattr__(self, name):
         atime = time.asctime(time.localtime(time.time()))
