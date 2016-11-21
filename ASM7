@@ -1,27 +1,25 @@
-#has some bugs ... still fixing ... srry! if you manage to fix it please let me know! 
-from polynomial import Polynomial
-from student import Student # write your own Student class
-import time
-
 class proxy:
-    atime = time.asctime(time.localtime(time.time())) #access time
-    ctime = time.asctime(time.localtime(time.time())) #creation time
-    mtime = time.asctime(time.localtime(time.time())) #modification time
 
     def __init__(self, obj):
         self._obj = obj
-        self.atime = time.asctime(time.localtime(time.time()))
-        self.ctime = time.asctime(time.localtime(time.time())) #creation time
-        self.mtime = time.asctime(time.localtime(time.time())) #modification time
+        self.ctime = time.ctime()
 
     def __getattr__(self, name):
-        atime = time.asctime(time.localtime(time.time()))
+        self.atime = time.ctime()
         return getattr(self._obj, name)
 
+    def setMtime(self):
+        self.mtime = time.ctime()
+
     def __setattr__(self, name, value):
-        if name not in ['_obj', 'ctime', 'cost_base']:
-            mtime = time.asctime(time.localtime(time.time()))
+        #print(name)
+        if name is not "mtime":
+            self.setMtime()
+        if name not in ['_obj', 'ctime', 'atime', 'mtime']:
+            #print("if")
             setattr(self._obj, name, value)
         else:
-            mtime = time.asctime(time.localtime(time.time()))
+            #print("else")
             object.__setattr__(self, name, value)
+            
+#the magic here is that the solution is by Jake Wahl who is a supreme badass
