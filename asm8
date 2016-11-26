@@ -1,0 +1,20 @@
+class Student:
+        def __init__(self, name, age):
+                self.name = name
+                self.age = age
+        def __repr__(self):
+                return repr((self.name, self.age))
+
+student_objects = [
+        Student('Eli', 19),
+        Student('Katie', 17),
+        Student('Jacob', 18),]
+
+print("Originally:")
+print(student_objects)
+print("By name:")
+print(sorted(student_objects, key=lambda student: student.name))
+print("By age:")
+print(sorted(student_objects, key=lambda student: student.age))
+
+
